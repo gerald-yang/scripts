@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+	echo "Need to input key in the first parameter"
+else
+	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $1
+fi

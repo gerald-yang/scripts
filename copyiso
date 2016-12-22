@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo "Clean $2"
+sudo rm -rf "$2"/*
+sudo rm -rf "$2"/.disk
+sudo rm -rf "$2"/.oem
+
+echo "un7z iso $1 to $2"
+sudo 7z x "$1" -o"$2"
+
+echo "un7z iso $1 to $2 done, umount $2"
+sudo umount "$2"
+
+echo "Copy iso completed"
+notify-send -u critical "Copy ISO done" "$1"
