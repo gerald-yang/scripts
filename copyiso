@@ -1,14 +1,22 @@
 #!/bin/bash
 
+if ! [ -e "/usr/bin/fuseiso" ] ; then
+	echo "Please install fuseiso first"
+	exit 1
+fi
+
 echo "Clean $2"
 sudo rm -rf "$2"/*
 sudo rm -rf "$2"/.disk
 sudo rm -rf "$2"/.oem
 
-echo "un7z iso $1 to $2"
-sudo 7z x "$1" -o"$2"
+echo "rsync iso $1 to $2"
+MNT=$(mktemp -d)
+fuseiso "$1" "$MNT"
+rsync -rltD --progress "$MNT/" "$2/"
 
-echo "un7z iso $1 to $2 done, umount $2"
+echo "rsync iso $1 to $2 done, umount $MNT and $2"
+fusermount -u "$MNT"
 sudo umount "$2"
 
 echo "Copy iso completed"
