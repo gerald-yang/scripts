@@ -5,6 +5,16 @@ if ! [ -e "/usr/bin/fuseiso" ] ; then
 	exit 1
 fi
 
+if ! mountpoint -q "$1"; then
+	echo "$1 is not a mount point"
+	exit 1
+fi
+
+if ! mountpoint -q "$2"; then
+	echo "$2 is not a mount point"
+	exit 1
+fi
+
 echo "Clean $2"
 sudo rm -rf "$2"/*
 sudo rm -rf "$2"/.disk
