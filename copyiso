@@ -5,11 +5,6 @@ if ! [ -e "/usr/bin/fuseiso" ] ; then
 	exit 1
 fi
 
-if ! mountpoint -q "$1"; then
-	echo "$1 is not a mount point"
-	exit 1
-fi
-
 if ! mountpoint -q "$2"; then
 	echo "$2 is not a mount point"
 	exit 1
@@ -23,6 +18,12 @@ sudo rm -rf "$2"/.oem
 echo "rsync iso $1 to $2"
 MNT=$(mktemp -d)
 fuseiso "$1" "$MNT"
+
+if ! mountpoint -q "$MNT"; then
+	echo "$MNT is not a mount point"
+	exit 1
+fi
+
 rsync -rltD --progress "$MNT/" "$2/"
 
 echo "rsync iso $1 to $2 done, umount $MNT and $2"
