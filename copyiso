@@ -1,5 +1,15 @@
 #!/bin/bash
 
+if [ -z "$1" ]; then
+	echo "Parameter 1 is empty"
+	exit 1
+fi
+
+if [ -z "$2" ]; then
+	echo "Parameter 2 is empty"
+	exit 1
+fi
+
 if ! [ -e "/usr/bin/fuseiso" ] ; then
 	echo "Please install fuseiso first"
 	exit 1
@@ -25,6 +35,7 @@ if ! mountpoint -q "$MNT"; then
 fi
 
 rsync -rltD --progress "$MNT/" "$2/"
+sync
 
 echo "rsync iso $1 to $2 done, umount $MNT and $2"
 fusermount -u "$MNT"
