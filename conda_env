@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+	echo "Please enter conda environment name"
+	exit 1
+else
+	source activate $1
+fi
+
