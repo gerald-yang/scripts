@@ -1,0 +1,4 @@
+#!/bin/sh
+
+#ssh -X 10.20.1.128
+ssh -X jumpserver@218.94.118.90 -p 33333
